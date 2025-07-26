@@ -1,0 +1,765 @@
+/* ===== RESET Y VARIABLES ===== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    /* Nueva paleta de colores más elegante */
+    --primary-gold: #d4af37;
+    --soft-gold: #f4e4bc;
+    --light-cream: #faf8f3;
+    --accent-purple: #8e44ad;
+    --deep-purple: #5d2d5d;
+    --warm-beige: #f5f1e8;
+    --white: #ffffff;
+    --cream: #fefcf7;
+    --shadow: rgba(212, 175, 55, 0.3);
+    --text-dark: #3c3c3c;
+    --text-light: #6b6b6b;
+    
+    /* Tipografías */
+    --font-title: 'Great Vibes', cursive;
+    --font-script: 'Dancing Script', cursive;
+    --font-body: 'Poppins', sans-serif;
+    
+    /* Espaciado */
+    --container-padding: 40px;
+    --sidebar-width: 200px;
+    --image-size: 120px;
+    --gap: 20px;
+}
+
+/* ===== ESTILOS GENERALES ===== */
+body {
+    font-family: var(--font-body);
+    background: linear-gradient(135deg, 
+        var(--light-cream) 0%, 
+        var(--soft-gold) 25%, 
+        var(--warm-beige) 75%, 
+        #f0ead6 100%);
+    min-height: 100vh;
+    color: var(--text-dark);
+    overflow-x: hidden;
+    position: relative;
+}
+
+.background-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="20" cy="20" r="2" fill="%23d4af3720"/><circle cx="80" cy="40" r="1.5" fill="%23d4af3715"/><circle cx="40" cy="80" r="1" fill="%23d4af3710"/><circle cx="70" cy="70" r="2.5" fill="%23d4af3725"/></svg>');
+    pointer-events: none;
+    z-index: -1;
+}
+
+.container {
+    display: flex;
+    min-height: 100vh;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: var(--container-padding);
+    gap: var(--gap);
+    align-items: flex-start;
+}
+
+/* ===== COLUMNAS LATERALES ===== */
+.sidebar {
+    width: var(--sidebar-width);
+    flex-shrink: 0;
+}
+
+.image-grid {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap);
+    padding: 20px 0;
+}
+
+.image-box {
+    position: relative;
+    width: var(--image-size);
+    height: var(--image-size);
+    border-radius: 15px;
+    overflow: hidden;
+    cursor: pointer;
+    box-shadow: 0 8px 25px var(--shadow);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    margin: 0 auto;
+    transform: rotate(-5deg);
+}
+
+.image-box:hover {
+    transform: translateY(-8px) scale(1.05) rotate(0deg);
+    box-shadow: 0 15px 35px rgba(212, 175, 55, 0.4);
+}
+
+.image-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: all 0.6s ease;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.decorative-img {
+    opacity: 1;
+    transform: rotateY(0deg);
+}
+
+.qr-img {
+    opacity: 0;
+    transform: rotateY(180deg);
+    background: var(--white);
+    padding: 15px;
+    object-fit: contain;
+}
+
+.image-box:hover .decorative-img {
+    opacity: 0;
+    transform: rotateY(-180deg);
+}
+
+.image-box:hover .qr-img {
+    opacity: 1;
+    transform: rotateY(0deg);
+}
+
+/* Efectos especiales para las columnas - inclinaciones variadas */
+.sidebar-left .image-box:nth-child(odd) {
+    animation: floatLeftOdd 3s ease-in-out infinite;
+    transform: rotate(-8deg);
+}
+
+.sidebar-left .image-box:nth-child(even) {
+    animation: floatLeftEven 3s ease-in-out infinite reverse;
+    transform: rotate(-3deg);
+}
+
+.sidebar-right .image-box:nth-child(odd) {
+    animation: floatRightOdd 3s ease-in-out infinite;
+    transform: rotate(5deg);
+}
+
+.sidebar-right .image-box:nth-child(even) {
+    animation: floatRightEven 3s ease-in-out infinite reverse;
+    transform: rotate(8deg);
+}
+
+/* Hover effects para las columnas - enderezar al hacer hover */
+.sidebar-left .image-box:nth-child(odd):hover,
+.sidebar-left .image-box:nth-child(even):hover,
+.sidebar-right .image-box:nth-child(odd):hover,
+.sidebar-right .image-box:nth-child(even):hover {
+    transform: translateY(-8px) scale(1.05) rotate(0deg);
+    animation: none;
+}
+
+@keyframes floatLeftOdd {
+    0%, 100% { transform: translateX(0px) translateY(0px) rotate(-8deg); }
+    25% { transform: translateX(-3px) translateY(-2px) rotate(-8deg); }
+    50% { transform: translateX(0px) translateY(-4px) rotate(-8deg); }
+    75% { transform: translateX(3px) translateY(-2px) rotate(-8deg); }
+}
+
+@keyframes floatLeftEven {
+    0%, 100% { transform: translateX(0px) translateY(0px) rotate(-3deg); }
+    25% { transform: translateX(-3px) translateY(-2px) rotate(-3deg); }
+    50% { transform: translateX(0px) translateY(-4px) rotate(-3deg); }
+    75% { transform: translateX(3px) translateY(-2px) rotate(-3deg); }
+}
+
+@keyframes floatRightOdd {
+    0%, 100% { transform: translateX(0px) translateY(0px) rotate(5deg); }
+    25% { transform: translateX(3px) translateY(-2px) rotate(5deg); }
+    50% { transform: translateX(0px) translateY(-4px) rotate(5deg); }
+    75% { transform: translateX(-3px) translateY(-2px) rotate(5deg); }
+}
+
+@keyframes floatRightEven {
+    0%, 100% { transform: translateX(0px) translateY(0px) rotate(8deg); }
+    25% { transform: translateX(3px) translateY(-2px) rotate(8deg); }
+    50% { transform: translateX(0px) translateY(-4px) rotate(8deg); }
+    75% { transform: translateX(-3px) translateY(-2px) rotate(8deg); }
+}
+
+/* ===== CONTENIDO CENTRAL ===== */
+.main-content {
+    flex: 1;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 40px 60px;
+    background-color: #ffffff;
+    backdrop-filter: blur(10px);
+    border-radius: 25px;
+    box-shadow: 0 20px 60px rgba(212, 175, 55, 0.2);
+    position: relative;
+    min-height: 80vh;
+}
+
+/* Agujeros de carpeta simulados */
+.main-content::after {
+    content: '';
+    position: absolute;
+    left: 30px;
+    top: 100px;
+    width: 8px;
+    height: 8px;
+    background-color: #e8e8e8;
+    border: 1px solid #ddd;
+    border-radius: 50%;
+    box-shadow: 
+        0 40px 0 0 #e8e8e8,
+        0 80px 0 0 #e8e8e8,
+        0 120px 0 0 #e8e8e8,
+        0 160px 0 0 #e8e8e8,
+        0 200px 0 0 #e8e8e8;
+}
+
+/* ===== TÍTULO ===== */
+.title {
+    font-family: var(--font-title);
+    font-size: 4.5rem;
+    color: var(--deep-purple);
+    text-align: center;
+    margin-bottom: 1rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    position: relative;
+    z-index: 1;
+}
+
+.subtitle {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.letter-info {
+    font-family: var(--font-script);
+    font-size: 1.2rem;
+    color: var(--text-light);
+    margin: 0.3rem 0;
+    font-style: italic;
+}
+
+.title::after {
+    content: '💖';
+    position: absolute;
+    top: -10px;
+    right: -30px;
+    font-size: 2rem;
+    animation: heartBeat 2s ease-in-out infinite;
+}
+
+/* ===== CANCIÓN DESTACADA ===== */
+.featured-song {
+    background-image: url('../images/decorativas/The Don\'t Know About Us.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    border-radius: 20px;
+    padding: 30px;
+    margin-bottom: 30px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 2px solid rgba(212, 175, 55, 0.3);
+    position: relative;
+    overflow: hidden;
+    min-height: 150px;
+}
+
+.featured-song::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 18px;
+    z-index: 1;
+    transition: background 0.3s ease;
+}
+
+.featured-song:hover::before {
+    background: rgba(0, 0, 0, 0.2);
+}
+
+.featured-song:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 40px rgba(212, 175, 55, 0.4);
+    border-color: var(--accent-purple);
+}
+
+.featured-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 20px;
+    align-items: center;
+    position: relative;
+    z-index: 2;
+    min-height: 90px;
+}
+
+.featured-left {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 15px;
+    border-radius: 15px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.featured-center {
+    /* Espacio vacío para mostrar el background */
+    min-height: 80px;
+}
+
+.featured-right {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 15px;
+    border-radius: 15px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.song-name {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: white;
+    margin-bottom: 5px;
+    font-family: var(--font-script);
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+.song-artist {
+    font-size: 1rem;
+    color: white;
+    margin-bottom: 8px;
+    font-family: var(--font-body);
+    font-weight: 500;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+}
+
+.click-hint {
+    font-size: 0.85rem;
+    color: var(--soft-gold);
+    font-weight: 600;
+    animation: pulse 2s ease-in-out infinite;
+    font-family: var(--font-script);
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.6);
+}
+
+.qr-code {
+    width: 80px;
+    height: 80px;
+    border-radius: 10px;
+    background: white;
+    padding: 5px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease;
+}
+
+.featured-song:hover .qr-code {
+    transform: scale(1.05);
+}
+
+.featured-song:hover .featured-left {
+    transform: translateX(-5px);
+}
+
+.featured-song:hover .featured-right {
+    transform: translateX(5px);
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 0.7; }
+    50% { opacity: 1; }
+}
+
+@keyframes heartBeat {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.3); }
+}
+
+/* ===== CARTA DE AMOR ===== */
+.love-letter {
+    position: relative;
+    z-index: 1;
+}
+
+.letter-content {
+    font-family: var(--font-script);
+    font-size: 1.4rem;
+    line-height: 1.8;
+    color: var(--text-dark);
+    max-height: 600px;
+    overflow-y: auto;
+    padding-right: 15px;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* Internet Explorer 10+ */
+    margin-top: 0;
+}
+
+/* Ocultar scrollbar en WebKit browsers (Chrome, Safari, Edge) */
+.letter-content::-webkit-scrollbar {
+    display: none;
+}
+
+.letter-content p {
+    margin-bottom: 1.5rem;
+    text-align: justify;
+    opacity: 0;
+    animation: fadeInUp 0.8s ease forwards;
+    /* Espaciado natural sin alineación a líneas */
+    line-height: 1.8;
+    margin-top: 0;
+}
+
+.letter-content p:nth-child(1) { animation-delay: 0.2s; }
+.letter-content p:nth-child(2) { animation-delay: 0.4s; }
+.letter-content p:nth-child(3) { animation-delay: 0.6s; }
+.letter-content p:nth-child(4) { animation-delay: 0.8s; }
+.letter-content p:nth-child(5) { animation-delay: 1.0s; }
+.letter-content p:nth-child(6) { animation-delay: 1.2s; }
+.letter-content p:nth-child(7) { animation-delay: 1.4s; }
+.letter-content p:nth-child(8) { animation-delay: 1.6s; }
+
+/* ===== ESTILOS ESPECIALES PARA LA CARTA ===== */
+.introduction {
+    font-style: italic;
+    color: var(--text-light);
+    border-left: 3px solid var(--primary-gold);
+    padding-left: 15px;
+    margin: 1.5rem 0;
+}
+
+.dedication {
+    text-align: center;
+    font-weight: 600;
+    color: var(--accent-purple);
+    margin: 2rem 0;
+}
+
+.chapter {
+    margin: 3rem 0;
+}
+
+.chapter-title {
+    font-family: var(--font-title);
+    font-size: 2.5rem;
+    color: var(--primary-gold);
+    text-align: center;
+    margin: 2rem 0;
+    border-bottom: 2px solid var(--soft-gold);
+    padding-bottom: 10px;
+}
+
+.dialogue {
+    margin: 2rem 0;
+}
+
+.question {
+    font-style: italic;
+    color: var(--accent-purple);
+    margin: 1rem 0 0.5rem 0;
+    font-weight: 500;
+}
+
+.acrostic-lines {
+    display: grid;
+    gap: 0.3rem;
+    margin: 1.5rem 0;
+    padding-left: 1rem;
+}
+
+.acrostic-lines p {
+    margin: 0;
+    animation: none;
+    opacity: 1;
+    font-style: italic;
+    color: var(--text-dark);
+}
+
+.letter {
+    font-weight: bold;
+    color: var(--primary-gold);
+    font-size: 1.2em;
+    margin-right: 0.5rem;
+}
+
+.emphasis {
+    text-align: center;
+    font-weight: 600;
+    color: var(--deep-purple);
+    font-size: 1.3rem;
+    margin: 2rem 0;
+    line-height: 1.6;
+}
+
+.final-verses {
+    background: linear-gradient(135deg, var(--soft-gold), var(--light-cream));
+    padding: 1.5rem;
+    border-radius: 10px;
+    margin: 2rem 0;
+    border-left: 4px solid var(--primary-gold);
+}
+
+.final-verses p {
+    margin: 0.8rem 0;
+    text-align: center;
+    font-style: italic;
+    color: var(--deep-purple);
+    animation: none;
+    opacity: 1;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.greeting {
+    font-size: 1.6rem !important;
+    color: var(--deep-rose) !important;
+    font-weight: 600;
+    margin-bottom: 2rem !important;
+}
+
+.signature {
+    text-align: right !important;
+    font-size: 1.5rem !important;
+    color: var(--deep-rose) !important;
+    font-weight: 600;
+    margin-top: 2rem !important;
+}
+
+.name {
+    font-family: var(--font-title);
+    font-size: 2rem;
+    display: block;
+    margin-top: 0.5rem;
+}
+
+/* ===== BOTÓN LEER MÁS ===== */
+.read-more-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    background: linear-gradient(45deg, var(--accent-rose), var(--deep-rose));
+    color: var(--white);
+    border: none;
+    padding: 15px 30px;
+    border-radius: 50px;
+    font-family: var(--font-script);
+    font-size: 1.2rem;
+    font-weight: 600;
+    cursor: pointer;
+    margin: 2rem auto 0;
+    transition: all 0.3s ease;
+    box-shadow: 0 8px 25px rgba(255, 105, 180, 0.3);
+}
+
+.read-more-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 35px rgba(255, 105, 180, 0.4);
+}
+
+.read-more-btn:active {
+    transform: translateY(0);
+}
+
+.heart {
+    animation: heartPulse 1.5s ease-in-out infinite;
+}
+
+@keyframes heartPulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+}
+
+/* ===== CORAZONES FLOTANTES ===== */
+.floating-hearts {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.floating-hearts .heart {
+    position: absolute;
+    font-size: 2rem;
+    opacity: 0.7;
+    animation: floatingHeart 15s linear infinite;
+}
+
+.floating-hearts .heart:nth-child(1) {
+    left: 10%;
+    animation-delay: 0s;
+    animation-duration: 12s;
+}
+
+.floating-hearts .heart:nth-child(2) {
+    left: 20%;
+    animation-delay: 3s;
+    animation-duration: 15s;
+}
+
+.floating-hearts .heart:nth-child(3) {
+    left: 70%;
+    animation-delay: 6s;
+    animation-duration: 18s;
+}
+
+.floating-hearts .heart:nth-child(4) {
+    left: 80%;
+    animation-delay: 9s;
+    animation-duration: 14s;
+}
+
+.floating-hearts .heart:nth-child(5) {
+    left: 90%;
+    animation-delay: 12s;
+    animation-duration: 16s;
+}
+
+@keyframes floatingHeart {
+    0% {
+        transform: translateY(100vh) rotate(0deg);
+        opacity: 0;
+    }
+    10% {
+        opacity: 0.7;
+    }
+    90% {
+        opacity: 0.7;
+    }
+    100% {
+        transform: translateY(-100px) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+/* ===== RESPONSIVE DESIGN ===== */
+@media (max-width: 1200px) {
+    :root {
+        --sidebar-width: 150px;
+        --image-size: 100px;
+        --container-padding: 20px;
+    }
+    
+    .main-content {
+        padding: 30px 40px;
+    }
+    
+    .title {
+        font-size: 3.5rem;
+    }
+    
+    .featured-layout {
+        gap: 15px;
+    }
+    
+    .qr-code {
+        width: 70px;
+        height: 70px;
+    }
+    
+    .song-name {
+        font-size: 1.1rem;
+    }
+    
+    .song-artist {
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 900px) {
+    .container {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .sidebar {
+        width: 100%;
+        order: 2;
+    }
+    
+    .main-content {
+        order: 1;
+        width: 100%;
+        max-width: 600px;
+    }
+    
+    .image-grid {
+        flex-direction: row;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+    
+    .featured-layout {
+        grid-template-columns: 2fr 1fr 2fr;
+        gap: 10px;
+    }
+    
+    .featured-song {
+        padding: 20px;
+        min-height: 120px;
+    }
+    
+    .qr-code {
+        width: 60px;
+        height: 60px;
+    }
+    
+    .song-name {
+        font-size: 1rem;
+    }
+    
+    .song-artist {
+        font-size: 0.85rem;
+    }
+    
+    .click-hint {
+        font-size: 0.75rem;
+    }
+}
+
+@media (max-width: 600px) {
+    .featured-layout {
+        grid-template-columns: 1fr;
+        gap: 15px;
+        text-align: center;
+    }
+    
+    .featured-left {
+        align-items: center;
+    }
+    
+    .featured-center {
+        min-height: 40px;
+    }
+    
+    .qr-code {
+        width: 80px;
+        height: 80px;
+    }
+}
